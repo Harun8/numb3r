@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 
+import { useStopwatch } from "react-timer-hook";
+
 import Image from "next/image";
 import "./globals.css";
 import Input from "./components/Input";
@@ -14,6 +16,8 @@ export default function Home() {
   const [menu, setMenu] = useState(true);
   const [gameAnswer, setGameAnswer] = useState([]);
   const [showFloater, setShowFloater] = useState(false);
+
+  const [secs, setSecs] = useState();
 
   const [inputValues, setInputValues] = useState(Array(gameMode).fill(""));
   const [correctPlace, setCorrectPlace] = useState(Array(gameMode).fill(false));
@@ -30,12 +34,25 @@ export default function Home() {
 
   const [play, setPlay] = useState(false);
 
-  // let correctPlace = `correctPlace`
-  // let correctNumber = `correctNumber`
+  const {
+    totalSeconds,
+    seconds,
+    minutes,
+    hours,
+    days,
+    isRunning,
+    start,
+    pause,
+    reset,
+  } = useStopwatch({ autoStart: false });
 
-  useEffect(() => {
-    generateGameNumber();
-  }, []);
+  // useEffect(() => {
+  //   console.log("seconds", totalSeconds);
+  // }, [seconds]);
+
+  // useEffect(() => {
+  //   generateGameNumber();
+  // }, []);
 
   useEffect(() => {
     console.log("attempts:", attempts);
@@ -43,28 +60,47 @@ export default function Home() {
 
   useEffect(() => {
     if (gameOver) {
-      console.log("gameover?", gameOver);
-      console.log("showFloater?", showFloater);
+      // console.log("gameover?", gameOver);
+      // console.log("showFloater?", showFloater);
 
       const timeoutId = setTimeout(() => {
         setShowFloater(false);
         setMenu((prev) => !prev); // generate the menu after the floater is done celebraiting the win for the user
+        setGameOver((prev) => !prev);
+
+        setAttempts([
+          {
+            inputValues: Array(gameMode).fill(""),
+            correctPlace: Array(gameMode).fill(false),
+            correctNumber: Array(gameMode).fill(false),
+          },
+        ]);
       }, 3000);
 
-      console.log("menu?", menu);
-      console.log("play?", play);
-      return () => clearTimeout(timeoutId); // Cleanup the timeout
+      // console.log("menu?", menu);
+      // console.log("play?", play);
+      return () => {
+        clearTimeout(timeoutId);
+      }; // Cleanup the timeout
     }
-
-    setGameOver((prev) => !prev);
   }, [gameOver]); // This useEffect will run whenever gameOver changes
+
+  // useEffect(() => {
+  //   console.log("GAMEOVER?", gameOver);
+  // }, [gameOver]);
 
   const startTimer = () => {
     console.log("timer started");
+    start();
   };
 
   const stopTimer = () => {
     console.log("timer stopped");
+
+    setAttempts((prevAttempts) => [
+      ...prevAttempts,
+      { timer: { hours, minutes, seconds } }, // Append the timer object
+    ]);
     // gameDone()
     setGameOver(true);
     setPlay(false);
@@ -142,7 +178,8 @@ export default function Home() {
           },
         ];
       } else if (currentAttempt.correctPlace.every(Boolean)) {
-        stopTimer();
+        pause();
+        stopTimer(); // stop if needed
       }
       // Update the current attempt and return the updated list of attempts.
       return [
@@ -154,6 +191,8 @@ export default function Home() {
 
   return (
     <div className="">
+      {/* <button onClick={start}>Start</button> */}
+
       {!play && menu && (
         <>
           <div className="d-flex justify-content-center mt-4 ">
@@ -162,6 +201,10 @@ export default function Home() {
               onClick={() => {
                 setPlay((prev) => !prev);
                 setMenu((prev) => !prev);
+                generateGameNumber();
+
+                console.log("gameover??", gameOver);
+                console.log("play???", play);
               }}>
               Start Game
               <div class="hoverEffect">
