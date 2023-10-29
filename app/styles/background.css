@@ -1,0 +1,107 @@
+@keyframes animate {
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+.background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    background: #46377b;
+    overflow: hidden;
+}
+.background li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 19s linear infinite;
+}
+
+
+
+
+.background li:nth-child(0) {
+    left: 43%;
+    width: 116px;
+    height: 116px;
+    bottom: -116px;
+    animation-delay: 1s;
+}
+.background li:nth-child(1) {
+    left: 36%;
+    width: 180px;
+    height: 180px;
+    bottom: -180px;
+    animation-delay: 2s;
+}
+.background li:nth-child(2) {
+    left: 38%;
+    width: 193px;
+    height: 193px;
+    bottom: -193px;
+    animation-delay: 1s;
+}
+.background li:nth-child(3) {
+    left: 13%;
+    width: 117px;
+    height: 117px;
+    bottom: -117px;
+    animation-delay: 4s;
+}
+.background li:nth-child(4) {
+    left: 89%;
+    width: 132px;
+    height: 132px;
+    bottom: -132px;
+    animation-delay: 14s;
+}
+.background li:nth-child(5) {
+    left: 60%;
+    width: 198px;
+    height: 198px;
+    bottom: -198px;
+    animation-delay: 21s;
+}
+.background li:nth-child(6) {
+    left: 37%;
+    width: 171px;
+    height: 171px;
+    bottom: -171px;
+    animation-delay: 23s;
+}
+.background li:nth-child(7) {
+    left: 79%;
+    width: 109px;
+    height: 109px;
+    bottom: -109px;
+    animation-delay: 27s;
+}
+.background li:nth-child(8) {
+    left: 71%;
+    width: 194px;
+    height: 194px;
+    bottom: -194px;
+    animation-delay: 13s;
+}
+.background li:nth-child(9) {
+    left: 18%;
+    width: 126px;
+    height: 126px;
+    bottom: -126px;
+    animation-delay: 24s;
+}
