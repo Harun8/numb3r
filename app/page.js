@@ -166,6 +166,7 @@ export default function Home() {
     }
   };
   const checkAnswer = (event) => {
+    console.log("event", event);
     console.log("game answer", gameAnswer);
     setAttempts((prevAttempts) => {
       const currentAttempt = { ...prevAttempts[prevAttempts.length - 1] };
@@ -175,10 +176,15 @@ export default function Home() {
       currentAttempt.correctNumber = currentAttempt.inputValues.map((value) =>
         gameAnswer.includes(value)
       );
-      if (
+
+      if (currentAttempt.inputValues.includes("")) {
+        console.log("U STILL GOT SOME EMPTY BOXESS LEFT");
+        return prevAttempts;
+      } else if (
         !currentAttempt.correctPlace.every(Boolean) &&
         prevAttempts.length < 5
       ) {
+        setFocusIndex(0); // reset the focus back to
         // User hasn't guessed correctly and has more attempts remaining.
         // Create a new attempt.
         return [
@@ -200,6 +206,13 @@ export default function Home() {
         currentAttempt,
       ];
     });
+  };
+
+  const handleKeyUp = (e) => {
+    if (e.key === "Enter") {
+      console.log("enter pressed");
+      checkAnswer();
+    }
   };
 
   return (
@@ -255,10 +268,10 @@ export default function Home() {
             <div
               className="d-flex justify-content-center mt-2 "
               key={attemptIndex}>
-              <form>
+              <form onKeyUp={handleKeyUp}>
                 {play &&
                   attempt.inputValues.map((value, index) => {
-                    console.log("indexxx", index, inputRefs.current[index]);
+                    // console.log("indexxx", index, inputRefs.current[index]);
                     return (
                       <Input
                         ref={inputRefs.current[index]}
