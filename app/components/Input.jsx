@@ -1,13 +1,15 @@
 
 
-import React from 'react'
+import React, {useEffect} from 'react'
 import "../globals.css"
 
-const Input = ({ value, onChange, correctPlace, correctNumber }) => {
+const Input = React.forwardRef(({ value, onChange, correctPlace, correctNumber, autoFocus }, ref) => {
 
-    // console.log('correctPlace:', correctPlace);
-    // console.log('correctNumber:', correctNumber);
-    
+  useEffect(() => {
+    if (focus && ref.current) {
+        ref.current.focus();
+    }
+}, [focus]);
 
     let className = ' form_width text-center shadow-sm  rounded mx-1  ';
     if (correctPlace) {
@@ -17,13 +19,15 @@ const Input = ({ value, onChange, correctPlace, correctNumber }) => {
     }
     return (
       <input
-        className={className}
+  
+      ref={ref}
+      className={className}
         type='text'
         maxLength={1}
         value={value}
         onChange={onChange}
       />
     );
-  };
+  });
 
 export default Input

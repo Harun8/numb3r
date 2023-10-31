@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { useStopwatch } from "react-timer-hook";
 
@@ -18,6 +18,7 @@ export default function Home() {
   const [showFloater, setShowFloater] = useState(false);
 
   const [secs, setSecs] = useState();
+  const [focusIndex, setFocusIndex] = useState(0);
 
   const [inputValues, setInputValues] = useState(Array(gameMode).fill(""));
   const [correctPlace, setCorrectPlace] = useState(Array(gameMode).fill(false));
@@ -31,6 +32,13 @@ export default function Home() {
       correctNumber: Array(gameMode).fill(false),
     },
   ]);
+  const inputRefs = useRef(
+    Array(gameMode)
+      .fill(null)
+      .map((_, i) => {
+        return React.createRef();
+      })
+  );
 
   const [play, setPlay] = useState(false);
 
@@ -57,6 +65,12 @@ export default function Home() {
   useEffect(() => {
     console.log("attempts:", attempts);
   }, [attempts]);
+
+  useEffect(() => {
+    if (play) {
+      inputRefs.current[focusIndex].current.focus();
+    }
+  }, [play, focusIndex]);
 
   useEffect(() => {
     if (gameOver) {
@@ -135,11 +149,7 @@ export default function Home() {
     if (attemptIndex === 0 && index === 0 && attempts.length === 1) {
       startTimer();
     }
-    // console.log("attempts", attempts);
-    // console.log("HandleInputChange");
-    // console.log("attamptindex", attemptIndex);
-    // console.log("index", index);
-    // console.log("event", event.target.value);
+
     const newValue = event.target.value;
     setAttempts((prevAttempts) => {
       const newAttempts = [...prevAttempts];
@@ -148,9 +158,12 @@ export default function Home() {
       return newAttempts;
     });
 
-    // if (condition) {
-
-    // }
+    if (newValue) {
+      const nextIndex = index + 1;
+      if (nextIndex < gameMode) {
+        setFocusIndex(nextIndex);
+      }
+    }
   };
   const checkAnswer = (event) => {
     console.log("game answer", gameAnswer);
@@ -205,6 +218,7 @@ export default function Home() {
 
                 console.log("gameover??", gameOver);
                 console.log("play???", play);
+                console.log("autofocuss??", focusIndex, inputRefs.current);
               }}>
               Start Game
               <div class="hoverEffect">
@@ -244,8 +258,11 @@ export default function Home() {
               <form>
                 {play &&
                   attempt.inputValues.map((value, index) => {
+                    console.log("indexxx", index, inputRefs.current[index]);
                     return (
                       <Input
+                        ref={inputRefs.current[index]}
+                        autoFocus={index === focusIndex}
                         correctNumber={attempt.correctNumber[index]}
                         correctPlace={attempt.correctPlace[index]}
                         key={index}
