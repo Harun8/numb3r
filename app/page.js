@@ -147,6 +147,31 @@ export default function Home() {
     setGameOver(true);
     setPlay(false);
     setShowFloater(true);
+
+    postReq();
+  };
+
+  const postReq = async () => {
+    try {
+      const response = await fetch("/api", {
+        method: "post",
+        body: JSON.stringify({
+          correctNumber: attempts[0].correctNumber,
+          correctPlace: attempts[0].correctPlace,
+          inputValues: attempts[0].inputValues,
+          timer: totalSeconds,
+          gameAnswer: gameAnswer,
+          // timer: attempts.,
+          // gameAnswer: attempts[attempts.length - 1],
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Requested success");
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   const gameLost = () => {
