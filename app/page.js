@@ -104,7 +104,7 @@ export default function Home() {
 
   useEffect(() => {
     if (userLost) {
-      // console.log("gameover?", gameOver);
+      // console.log("attempts", attempts);
       // console.log("showFloater?", showFloater);
 
       const timeoutId = setTimeout(() => {
@@ -140,7 +140,8 @@ export default function Home() {
 
     setAttempts((prevAttempts) => [
       ...prevAttempts,
-      { timer: { hours, minutes, seconds } }, // Append the timer object
+      { timer: { hours, minutes, seconds } },
+      { gameAnswer: gameAnswer }, // Append the timer object
     ]);
     // gameDone()
     setGameOver(true);
@@ -151,7 +152,8 @@ export default function Home() {
   const gameLost = () => {
     setAttempts((prevAttempts) => [
       ...prevAttempts,
-      { timer: { hours, minutes, seconds } }, // Append the timer object
+      { timer: { hours, minutes, seconds } },
+      { gameAnswer: gameAnswer }, // Append the timer object
     ]);
 
     setUserLost(true);
