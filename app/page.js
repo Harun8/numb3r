@@ -17,6 +17,8 @@ export default function Home() {
   const [gameAnswer, setGameAnswer] = useState([]);
   const [showFloater, setShowFloater] = useState(false);
 
+  const [userLost, setUserLost] = useState(false);
+
   const [secs, setSecs] = useState();
   const [focusIndex, setFocusIndex] = useState(0);
 
@@ -81,6 +83,7 @@ export default function Home() {
         setShowFloater(false);
         setMenu((prev) => !prev); // generate the menu after the floater is done celebraiting the win for the user
         setGameOver((prev) => !prev);
+        setFocusIndex(0);
 
         setAttempts([
           {
@@ -99,16 +102,40 @@ export default function Home() {
     }
   }, [gameOver]); // This useEffect will run whenever gameOver changes
 
-  // useEffect(() => {
-  //   console.log("GAMEOVER?", gameOver);
-  // }, [gameOver]);
+  useEffect(() => {
+    if (userLost) {
+      // console.log("gameover?", gameOver);
+      // console.log("showFloater?", showFloater);
+
+      const timeoutId = setTimeout(() => {
+        setShowFloater(false);
+        setMenu((prev) => !prev); // generate the menu after the floater is done celebraiting the win for the user
+        setUserLost((prev) => !prev);
+        setFocusIndex(0);
+
+        setAttempts([
+          {
+            inputValues: Array(gameMode).fill(""),
+            correctPlace: Array(gameMode).fill(false),
+            correctNumber: Array(gameMode).fill(false),
+          },
+        ]);
+      }, 3000);
+
+      // console.log("menu?", menu);
+      // console.log("play?", play);
+      return () => {
+        clearTimeout(timeoutId);
+      }; // Cleanup the timeout
+    }
+  }, [userLost]); // This useEffect will run whenever gameOver changes
 
   const startTimer = () => {
     console.log("timer started");
     start();
   };
 
-  const stopTimer = () => {
+  const gameWon = () => {
     console.log("timer stopped");
 
     setAttempts((prevAttempts) => [
@@ -117,6 +144,17 @@ export default function Home() {
     ]);
     // gameDone()
     setGameOver(true);
+    setPlay(false);
+    setShowFloater(true);
+  };
+
+  const gameLost = () => {
+    setAttempts((prevAttempts) => [
+      ...prevAttempts,
+      { timer: { hours, minutes, seconds } }, // Append the timer object
+    ]);
+
+    setUserLost(true);
     setPlay(false);
     setShowFloater(true);
   };
@@ -177,7 +215,11 @@ export default function Home() {
         gameAnswer.includes(value)
       );
 
-      if (currentAttempt.inputValues.includes("")) {
+      if (prevAttempts.length === 5) {
+        console.log("game over, u didnt solve it in time");
+        pause();
+        gameLost();
+      } else if (currentAttempt.inputValues.includes("")) {
         console.log("U STILL GOT SOME EMPTY BOXESS LEFT");
         return prevAttempts;
       } else if (
@@ -198,7 +240,7 @@ export default function Home() {
         ];
       } else if (currentAttempt.correctPlace.every(Boolean)) {
         pause();
-        stopTimer(); // stop if needed
+        gameWon(); // stop if needed
       }
       // Update the current attempt and return the updated list of attempts.
       return [
@@ -208,6 +250,7 @@ export default function Home() {
     });
   };
 
+  // enter key as input
   const handleKeyUp = (e) => {
     if (e.key === "Enter") {
       console.log("enter pressed");
@@ -221,7 +264,7 @@ export default function Home() {
 
       {!play && menu && (
         <>
-          <div className="d-flex justify-content-center mt-4 ">
+          <div className="d-flex justify-content-center mt-5 ">
             <button
               class="button"
               onClick={() => {
@@ -249,19 +292,20 @@ export default function Home() {
           </div>
         </>
       )}
-
+      {/* 
       <button
         className="btn btn-outline-success btn-sm mt-5"
         onClick={checkAnswer}>
         Click me
-      </button>
+      </button> */}
 
-      {gameOver && showFloater && (
+      {(gameOver || userLost) && showFloater && (
         <div className=" d-flex justify-content-center">
           <Floater></Floater>
         </div>
       )}
       {!gameOver &&
+        !userLost &&
         play &&
         attempts.map((attempt, attemptIndex) => {
           return (
