@@ -144,23 +144,26 @@ export default function Home() {
       { gameAnswer: gameAnswer }, // Append the timer object
     ]);
     // gameDone()
+    postReq();
     setGameOver(true);
     setPlay(false);
     setShowFloater(true);
-
-    postReq();
   };
 
   const postReq = async () => {
     try {
+      console.log("post", attempts);
       const response = await fetch("/api", {
         method: "post",
         body: JSON.stringify({
-          correctNumber: attempts[0].correctNumber,
-          correctPlace: attempts[0].correctPlace,
-          inputValues: attempts[0].inputValues,
-          timer: totalSeconds,
+          attempts,
           gameAnswer: gameAnswer,
+          timer: totalSeconds,
+          // correctNumber: attempts[0].correctNumber,
+          // correctPlace: attempts[0].correctPlace,
+          // inputValues: attempts[0].inputValues,
+          // timer: totalSeconds,
+          // gameAnswer: gameAnswer,
           // timer: attempts.,
           // gameAnswer: attempts[attempts.length - 1],
         }),
@@ -242,7 +245,10 @@ export default function Home() {
         gameAnswer.includes(value)
       );
 
-      if (prevAttempts.length === 5) {
+      if (
+        prevAttempts.length === 5 &&
+        !currentAttempt.correctPlace.every(Boolean)
+      ) {
         console.log("game over, u didnt solve it in time");
         pause();
         gameLost();
