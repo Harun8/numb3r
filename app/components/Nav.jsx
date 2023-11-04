@@ -8,7 +8,7 @@ const Nav = () => {
 <div className="container mt-3">
   <div className="row">
     <div className="col text-right mt-4">
-      <Link href="/leaderboard" className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+      <Link href="/leaderboard" className=" link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
         Leaderboard
       </Link>
     </div>

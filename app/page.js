@@ -16,6 +16,7 @@ export default function Home() {
   const [menu, setMenu] = useState(true);
   const [gameAnswer, setGameAnswer] = useState([]);
   const [showFloater, setShowFloater] = useState(false);
+  const [gameIsLost, setGameIsLost] = useState(false);
 
   const [userLost, setUserLost] = useState(false);
 
@@ -136,29 +137,36 @@ export default function Home() {
   };
 
   const gameWon = () => {
+    let userwon = true;
+    console.log("GAME WON CALLED");
     console.log("timer stopped");
 
     setAttempts((prevAttempts) => [
       ...prevAttempts,
-      { timer: { hours, minutes, seconds } },
-      { gameAnswer: gameAnswer }, // Append the timer object
+      // { timer: { hours, minutes, seconds } },
+      // { gameAnswer: gameAnswer }, // Append the timer object
     ]);
     // gameDone()
-    postReq();
+    // setGameIsLost(false);
+    postReq(userwon);
     setGameOver(true);
     setPlay(false);
     setShowFloater(true);
   };
 
-  const postReq = async () => {
+  const postReq = async (userwon) => {
+    console.log("gameIsLost", userwon);
+
     try {
       console.log("post", attempts);
       const response = await fetch("/api", {
         method: "post",
+
         body: JSON.stringify({
           attempts,
           gameAnswer: gameAnswer,
           timer: totalSeconds,
+          gameWon: userwon,
           // correctNumber: attempts[0].correctNumber,
           // correctPlace: attempts[0].correctPlace,
           // inputValues: attempts[0].inputValues,
@@ -178,11 +186,15 @@ export default function Home() {
   };
 
   const gameLost = () => {
+    let userwon = false;
+    console.log("GAME LOST CALLED");
     setAttempts((prevAttempts) => [
       ...prevAttempts,
-      { timer: { hours, minutes, seconds } },
-      { gameAnswer: gameAnswer }, // Append the timer object
+      // { timer: { hours, minutes, seconds } },
+      // { gameAnswer: gameAnswer }, // Append the timer object
     ]);
+    // setGameIsLost(true);
+    postReq(userwon);
 
     setUserLost(true);
     setPlay(false);
@@ -249,6 +261,7 @@ export default function Home() {
         prevAttempts.length === 5 &&
         !currentAttempt.correctPlace.every(Boolean)
       ) {
+        setGameIsLost(true);
         console.log("game over, u didnt solve it in time");
         pause();
         gameLost();
@@ -272,6 +285,7 @@ export default function Home() {
           },
         ];
       } else if (currentAttempt.correctPlace.every(Boolean)) {
+        setGameIsLost(false);
         pause();
         gameWon(); // stop if needed
       }

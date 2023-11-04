@@ -3,7 +3,8 @@ import answer from "@/models/gameAnswer";
 import { connectDB } from "@/utils/db";
 
 export const POST = async (req, res) => {
-  const { attempts, timer, gameAnswer } = await req.json();
+  console.log("req body", req.body);
+  const { attempts, timer, gameAnswer, gameWon } = await req.json();
 
   try {
     await connectDB();
@@ -12,7 +13,10 @@ export const POST = async (req, res) => {
       Round: attempts,
       timer,
       gameAnswer,
+      gameWon,
     });
+
+    console.log("New Game Answer:", newGameAnswer);
 
     await newGameAnswer.save();
     return new Response(JSON.stringify(newGameAnswer));

@@ -24,6 +24,11 @@ const gameAnswerSchema = new Schema({
     type: Array,
     requied: [true, "Game answer is required"],
   },
+
+  gameWon: {
+    type: Boolean,
+    required: [true, "Game status is required"],
+  },
 });
 
 const answer = models.answer || model("answer", gameAnswerSchema);
