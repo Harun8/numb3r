@@ -11,11 +11,11 @@ const Input = React.forwardRef(({ value, onChange, correctPlace, correctNumber, 
     }
 }, [focus]);
 
-    let className = ' form_width text-center shadow-sm  rounded mx-1  ';
+    let className = '  border form_width text-center shadow-sm  rounded mx-1  ';
     if (correctPlace) {
-      className += ' correctPlace';
+      className += ' correctPlace border border-success';
     } else if (correctNumber) {
-      className += ' correctNumber';
+      className += ' border border-warning correctNumber';
     }
     return (
       <input

@@ -32,23 +32,6 @@ const Nav = () => {
 
 
 
-// <nav class="navbar bg-body-tertiary ml-5 ">
-//   <div class="container-fluid">
-//     <a class="navbar-brand" href="#">
-//         <Image
-//         src="/assets/number-blocks.png"
-//         width={80}
-//         height={80}
-//         alt='numb3r logo'
-//         >
-
-
-//         </Image>
-
-//     </a>
-//   </div>
-  
-// </nav>
   )
 }
 

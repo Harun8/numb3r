@@ -297,11 +297,22 @@ export default function Home() {
     });
   };
 
+  const deleteInput = () => {
+    if (focusIndex === 0) {
+      return;
+    } else {
+      setFocusIndex((prev) => prev - 1);
+    }
+  };
+
   // enter key as input
   const handleKeyUp = (e) => {
+    console.log("event", e);
     if (e.key === "Enter") {
       console.log("enter pressed");
       checkAnswer();
+    } else if (e.key === "Backspace") {
+      deleteInput();
     }
   };
 
@@ -313,26 +324,26 @@ export default function Home() {
         <>
           <div className="d-flex justify-content-center mt-5 ">
             <button
-              class="button"
+              className="button"
               onClick={() => {
                 setPlay((prev) => !prev);
                 setMenu((prev) => !prev);
                 generateGameNumber();
 
-                console.log("gameover??", gameOver);
-                console.log("play???", play);
-                console.log("autofocuss??", focusIndex, inputRefs.current);
+                // console.log("gameover??", gameOver);
+                // console.log("play???", play);
+                // console.log("autofocuss??", focusIndex, inputRefs.current);
               }}>
               Start Game
-              <div class="hoverEffect">
+              <div className="hoverEffect">
                 <div></div>
               </div>
             </button>
           </div>
           <div className="d-flex justify-content-center mt-3">
-            <button class="button">
+            <button className="button">
               How to play
-              <div class="hoverEffect">
+              <div className="hoverEffect">
                 <div></div>
               </div>
             </button>
@@ -357,9 +368,9 @@ export default function Home() {
         attempts.map((attempt, attemptIndex) => {
           return (
             <div
-              className="d-flex justify-content-center mt-2 "
+              className="  d-flex justify-content-center mt-2 "
               key={attemptIndex}>
-              <form onKeyUp={handleKeyUp}>
+              <form className="" onKeyUp={handleKeyUp}>
                 {play &&
                   attempt.inputValues.map((value, index) => {
                     // console.log("indexxx", index, inputRefs.current[index]);
