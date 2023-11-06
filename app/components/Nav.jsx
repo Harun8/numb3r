@@ -19,6 +19,7 @@ const Nav = () => {
           width={80}
           height={80}
           alt='numb3r logo'
+          priority={true}
         />
       </a>
     </div>

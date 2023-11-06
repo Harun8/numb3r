@@ -226,11 +226,30 @@ export default function Home() {
   };
 
   const handleInputChange = (attemptIndex, index, event) => {
+    console.log("handleInput called");
+    // console.log("attempindex", attemptIndex);
+    // console.log("index", index);
+    // console.log("event", event);
+
+    const newValue = event.target.value;
+
+    if (isNaN(parseInt(event.target.value))) {
+      console.log("not a number famalam");
+      return;
+    }
     if (attemptIndex === 0 && index === 0 && attempts.length === 1) {
       startTimer();
     }
 
-    const newValue = event.target.value;
+    // console.log("newValue", newValue);
+    // console.log("attempts", attempts[attempts.length - 1].inputValues);
+
+    // if (attempts[attempts.length - 1].inputValues.includes("")) {
+    //   console.log("Can't write the same number twice");
+
+    //   return;
+    // }
+
     setAttempts((prevAttempts) => {
       const newAttempts = [...prevAttempts];
       newAttempts[attemptIndex].inputValues[index] =
@@ -246,7 +265,7 @@ export default function Home() {
     }
   };
   const checkAnswer = (event) => {
-    console.log("event", event);
+    // console.log("event", event);
     console.log("game answer", gameAnswer);
     setAttempts((prevAttempts) => {
       const currentAttempt = { ...prevAttempts[prevAttempts.length - 1] };
@@ -308,6 +327,7 @@ export default function Home() {
   // enter key as input
   const handleKeyUp = (e) => {
     console.log("event", e);
+
     if (e.key === "Enter") {
       console.log("enter pressed");
       checkAnswer();
