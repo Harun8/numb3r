@@ -227,11 +227,26 @@ export default function Home() {
 
   const handleInputChange = (attemptIndex, index, event) => {
     console.log("handleInput called");
-    // console.log("attempindex", attemptIndex);
+    console.log("attempindex", attemptIndex);
     // console.log("index", index);
     // console.log("event", event);
 
     const newValue = event.target.value;
+    const parsedValue = parseInt(newValue, 10); // Parse once and use the parsed value
+
+    console.log("new value", newValue);
+
+    if (!Number.isInteger(parseInt(newValue))) {
+      console.log("Not a valid integer number");
+      // event.target.value = "";
+      // deleteInput();
+      return; // Early return to prevent further state updates
+    }
+
+    if (attempts[attemptIndex].inputValues.includes(parsedValue)) {
+      console.log("duplicate numbers");
+      return;
+    }
 
     console.log("made it ehre");
     if (attemptIndex === 0 && index === 0 && attempts.length === 1) {
@@ -247,12 +262,6 @@ export default function Home() {
     //   return;
     // }
 
-    if (!Number.isInteger(parseInt(newValue))) {
-      console.log("Not a valid integer number");
-      // event.target.value = "";
-      // deleteInput();
-      return; // Early return to prevent further state updates
-    }
     setAttempts((prevAttempts) => {
       const newAttempts = [...prevAttempts];
       newAttempts[attemptIndex].inputValues[index] =
