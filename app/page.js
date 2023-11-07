@@ -233,10 +233,7 @@ export default function Home() {
 
     const newValue = event.target.value;
 
-    if (isNaN(parseInt(event.target.value))) {
-      console.log("not a number famalam");
-      return;
-    }
+    console.log("made it ehre");
     if (attemptIndex === 0 && index === 0 && attempts.length === 1) {
       startTimer();
     }
@@ -250,6 +247,12 @@ export default function Home() {
     //   return;
     // }
 
+    if (!Number.isInteger(parseInt(newValue))) {
+      console.log("Not a valid integer number");
+      // event.target.value = "";
+      // deleteInput();
+      return; // Early return to prevent further state updates
+    }
     setAttempts((prevAttempts) => {
       const newAttempts = [...prevAttempts];
       newAttempts[attemptIndex].inputValues[index] =
@@ -317,11 +320,23 @@ export default function Home() {
   };
 
   const deleteInput = () => {
-    if (focusIndex === 0) {
-      return;
-    } else {
-      setFocusIndex((prev) => prev - 1);
-    }
+    setAttempts((prevAttempts) => {
+      // Copy the current attempts to a new array.
+      const newAttempts = [...prevAttempts];
+      // Get the current attempt.
+      const currentAttempt = newAttempts[newAttempts.length - 1];
+      // Check if the current input has a value.
+      if (currentAttempt.inputValues[focusIndex] !== "") {
+        // Clear the current input value.
+        currentAttempt.inputValues[focusIndex] = "";
+      } else if (focusIndex > 0) {
+        // If the current input is already empty, clear the previous input value and update the focus index.
+        currentAttempt.inputValues[focusIndex - 1] = "";
+        setFocusIndex(focusIndex - 1);
+      }
+      // Return the updated attempts.
+      return newAttempts;
+    });
   };
 
   // enter key as input
@@ -331,7 +346,7 @@ export default function Home() {
     if (e.key === "Enter") {
       console.log("enter pressed");
       checkAnswer();
-    } else if (e.key === "Backspace") {
+    } else if (e.key === "Backspace" && e.target.value === "") {
       deleteInput();
     }
   };
