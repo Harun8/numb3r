@@ -368,6 +368,7 @@ export default function Home() {
         <>
           <div className="d-flex justify-content-center mt-5 ">
             <button
+              id="start game"
               className="button"
               onClick={() => {
                 setPlay((prev) => !prev);
@@ -420,6 +421,7 @@ export default function Home() {
                     // console.log("indexxx", index, inputRefs.current[index]);
                     return (
                       <Input
+                        id={index}
                         ref={inputRefs.current[index]}
                         autoFocus={index === focusIndex}
                         correctNumber={attempt.correctNumber[index]}
