@@ -19,7 +19,7 @@ export default function Home() {
   const [gameIsLost, setGameIsLost] = useState(false);
 
   const [openLeaderboardModal, setOpenLeaderboardModal] = useState(false);
-  const [quickestTime, setQuicketsTime] = useState();
+  const [quickestTime, setQuicketsTime] = useState(0);
 
   const [userLost, setUserLost] = useState(false);
 
