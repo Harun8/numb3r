@@ -17,7 +17,7 @@ const roundSchema = new Schema({
 const gameAnswerSchema = new Schema({
   Round: [roundSchema],
   timer: {
-    type: String,
+    type: Number,
     // required: [true, "Time is required"],
   },
   gameAnswer: {
@@ -28,6 +28,11 @@ const gameAnswerSchema = new Schema({
   gameWon: {
     type: Boolean,
     required: [true, "Game status is required"],
+  },
+
+  name: {
+    type: String,
+    required: false,
   },
 });
 

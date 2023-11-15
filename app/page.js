@@ -18,7 +18,12 @@ export default function Home() {
   const [showFloater, setShowFloater] = useState(false);
   const [gameIsLost, setGameIsLost] = useState(false);
 
+  const [openLeaderboardModal, setOpenLeaderboardModal] = useState(false);
+  const [quickestTime, setQuicketsTime] = useState();
+
   const [userLost, setUserLost] = useState(false);
+
+  const [qTName, setQTName] = useState();
 
   const [secs, setSecs] = useState();
   const [focusIndex, setFocusIndex] = useState(0);
@@ -66,6 +71,28 @@ export default function Home() {
   // }, []);
 
   useEffect(() => {
+    const getGameStats = async () => {
+      try {
+        const response = await fetch("/api");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("Data received:", data);
+        console.log("quicketsTime", data[0].timer);
+
+        if (data && data.length > 0) {
+          setQuicketsTime(data[0].timer); // Use 'data' here
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getGameStats();
+  }, []);
+
+  useEffect(() => {
     console.log("attempts:", attempts);
   }, [attempts]);
 
@@ -77,14 +104,12 @@ export default function Home() {
 
   useEffect(() => {
     if (gameOver) {
-      // console.log("gameover?", gameOver);
-      // console.log("showFloater?", showFloater);
-
       const timeoutId = setTimeout(() => {
         setShowFloater(false);
         setMenu((prev) => !prev); // generate the menu after the floater is done celebraiting the win for the user
         setGameOver((prev) => !prev);
         setFocusIndex(0);
+        reset();
 
         setAttempts([
           {
@@ -113,7 +138,6 @@ export default function Home() {
         setMenu((prev) => !prev); // generate the menu after the floater is done celebraiting the win for the user
         setUserLost((prev) => !prev);
         setFocusIndex(0);
-
         setAttempts([
           {
             inputValues: Array(gameMode).fill(""),
@@ -140,6 +164,14 @@ export default function Home() {
     let userwon = true;
     console.log("GAME WON CALLED");
     console.log("timer stopped");
+    console.log("totalseconds", totalSeconds);
+    console.log("quicketsTime", quickestTime);
+    // TODO: IF user is quicker than the quickets time then open up the modal:
+
+    if (totalSeconds < quickestTime) {
+      console.log("QUICKETS TIMER MFFFFF");
+      setOpenLeaderboardModal(true);
+    }
 
     setAttempts((prevAttempts) => [
       ...prevAttempts,
@@ -155,7 +187,12 @@ export default function Home() {
   };
 
   const postReq = async (userwon) => {
+    console.log("totalseconds", totalSeconds);
     console.log("gameIsLost", userwon);
+
+    if (totalSeconds < quickestTime) {
+      return;
+    }
 
     try {
       console.log("post", attempts);
@@ -165,15 +202,8 @@ export default function Home() {
         body: JSON.stringify({
           attempts,
           gameAnswer: gameAnswer,
-          timer: totalSeconds,
+          timer: Number(totalSeconds),
           gameWon: userwon,
-          // correctNumber: attempts[0].correctNumber,
-          // correctPlace: attempts[0].correctPlace,
-          // inputValues: attempts[0].inputValues,
-          // timer: totalSeconds,
-          // gameAnswer: gameAnswer,
-          // timer: attempts.,
-          // gameAnswer: attempts[attempts.length - 1],
         }),
       });
 
@@ -252,15 +282,6 @@ export default function Home() {
     if (attemptIndex === 0 && index === 0 && attempts.length === 1) {
       startTimer();
     }
-
-    // console.log("newValue", newValue);
-    // console.log("attempts", attempts[attempts.length - 1].inputValues);
-
-    // if (attempts[attempts.length - 1].inputValues.includes("")) {
-    //   console.log("Can't write the same number twice");
-
-    //   return;
-    // }
 
     setAttempts((prevAttempts) => {
       const newAttempts = [...prevAttempts];
@@ -360,9 +381,53 @@ export default function Home() {
     }
   };
 
+  const quickestTimePostReq = async () => {
+    console.log("YESSIRRR", qTName);
+    setOpenLeaderboardModal((prev) => !prev);
+
+    try {
+      const response = await fetch("/api", {
+        method: "POST",
+        body: JSON.stringify({
+          attempts,
+          gameAnswer: gameAnswer,
+          timer: Number(totalSeconds),
+          gameWon: true,
+          name: qTName,
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Request was a success");
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   return (
     <div className="">
       {/* <button onClick={start}>Start</button> */}
+
+      {openLeaderboardModal && (
+        <>
+          <div id="myModal" class="modal-backdrop ">
+            <div class="modal-content rounded border ">
+              <h2 className="mx-auto">Congrats!</h2>
+              <p className="mx-auto">You've got the fastest time</p>
+              <form onSubmit={quickestTimePostReq}>
+                <input
+                  onChange={(e) => setQTName(e.target.value)}
+                  placeholder="Write your name"
+                  className="my-3  mx-auto"></input>
+                <button type="submit" className="mx-auto">
+                  Confirm
+                </button>
+              </form>
+            </div>
+          </div>
+        </>
+      )}
 
       {!play && menu && (
         <>
