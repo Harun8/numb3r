@@ -9,6 +9,7 @@ const Stats = () => {
   const [gameCompletionRatio,setGameCompletionRatio] = useState([])
   const [data, setData] = useState([])
   const [options, setOptions] = useState()
+  const [gameWonData, setGameWonData] = useState()
 
   useEffect(()=>{
 
@@ -34,6 +35,7 @@ const Stats = () => {
 
   useEffect(()=> {
     console.log("gameCompletionRatio", gameCompletionRatio);
+    // console.log("roundwin", gameCompletionRatio[3].roundWin[0].round1Win);
  setData ( {
     labels: ['Won', 'Lost'],
     datasets: [
@@ -53,9 +55,41 @@ const Stats = () => {
                 'rgba(165, 19, 0, 0.8)',
      
               ],
-              borderWidth: 2
+              borderWidth: 2,
+              
         }
     ]
+})
+
+setGameWonData({
+  labels: ['1', '2', '3', '4', '5'],
+  datasets: [
+      {
+          label: 'Round win',
+          data: [ gameCompletionRatio[3]?.roundWin?.[0]?.round1Win
+          , gameCompletionRatio[3]?.roundWin?.[1]?.round2Win, 
+          gameCompletionRatio[3]?.roundWin?.[2]?.round3Win, 
+          gameCompletionRatio[3]?.roundWin?.[3]?.round4Win,
+          gameCompletionRatio[3]?.roundWin?.[4]?.round5Win],
+          backgroundColor: [
+              'rgba(255, 159, 64, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 0, 77, 0.2)'
+
+            ],
+            borderColor: [
+              'rgb(255, 159, 64)',
+              'rgb(75, 192, 192)',
+              'rgb(54, 162, 235)',
+              'rgb(153, 102, 255)',
+              'rgb(255, 0, 77)'
+
+            ],
+            borderWidth: 1
+      }
+  ]
 })
 
 
@@ -73,14 +107,34 @@ setOptions ({
 
   return (
 
-<div className='d-flex justify-content-center'>
-  {/* {data && data.length > 0 && (
+    <>
+ 
 
-  )} 
-  */}
-<Chart type="bar" data={data} options={options} />
+  <div class="container  text-center">
+      <h3>Game statistics</h3>
+  <div class="row justify-content-center gap-5">
+    <div class="col-4 border rounded shadow ">
+    <Chart type="bar" data={data} options={options} />
 
+    </div>
+    <div class="col-4 border rounded shadow">
+    <Chart type="bar" data={data} options={options} />
+    </div>
+  </div>
+  
+  <div className='row justify-content-center  mt-5'>
+    <div className='col-6 border rounded shadow'>
+
+  <Chart type="bar" data={gameWonData} options={options} />
+
+    </div>
+  </div>
+  
 </div>
+
+    
+
+</>
     )
 }
 

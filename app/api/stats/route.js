@@ -8,6 +8,21 @@ export const GET = async (req, res) => {
     const totalGames = await answer.countDocuments();
     const gameWon = await answer.countDocuments({ gameWon: true });
     const gameLost = totalGames - gameWon;
+    const round1Win = await answer.countDocuments({
+      $and: [{ Round: { $size: 1 } }, { gameWon: true }],
+    });
+    const round2Win = await answer.countDocuments({
+      $and: [{ Round: { $size: 2 } }, { gameWon: true }],
+    });
+    const round3Win = await answer.countDocuments({
+      $and: [{ Round: { $size: 3 } }, { gameWon: true }],
+    });
+    const round4Win = await answer.countDocuments({
+      $and: [{ Round: { $size: 4 } }, { gameWon: true }],
+    });
+    const round5Win = await answer.countDocuments({
+      $and: [{ Round: { $size: 5 } }, { gameWon: true }],
+    });
     const response = [
       {
         totalGames: totalGames,
@@ -17,6 +32,25 @@ export const GET = async (req, res) => {
       },
       {
         gameLost: gameLost,
+      },
+      {
+        roundWin: [
+          {
+            round1Win: round1Win,
+          },
+          {
+            round2Win: round2Win,
+          },
+          {
+            round3Win: round3Win,
+          },
+          {
+            round4Win: round4Win,
+          },
+          {
+            round5Win: round5Win,
+          },
+        ],
       },
     ];
 
