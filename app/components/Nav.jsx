@@ -5,10 +5,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 const Nav = () => {
   return (
-<div className="container mt-3">
-  <div className="row">
+<div className="container ">
+  <div className="row ">
     <div className="col text-right mt-4">
-      <Link href="/leaderboard" className=" link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+      <Link href="/leaderboard" className=" text-white link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
         Leaderboard
       </Link>
     </div>
@@ -24,7 +24,7 @@ const Nav = () => {
       </a>
     </div>
     <div className="col text-left mt-4">
-      <Link href="/stats" className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+      <Link href="/stats" className=" text-white link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
         Stats
       </Link>
     </div>

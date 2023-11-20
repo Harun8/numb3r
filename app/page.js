@@ -109,7 +109,7 @@ export default function Home() {
         setMenu((prev) => !prev); // generate the menu after the floater is done celebraiting the win for the user
         setGameOver((prev) => !prev);
         setFocusIndex(0);
-        reset();
+        //reset();
 
         setAttempts([
           {
@@ -209,6 +209,7 @@ export default function Home() {
 
       if (response.ok) {
         console.log("Requested success");
+        reset();
       }
     } catch (error) {
       console.log("error", error);
@@ -412,17 +413,25 @@ export default function Home() {
       {openLeaderboardModal && (
         <>
           <div id="myModal" class="modal-backdrop ">
-            <div class="modal-content rounded border ">
-              <h2 className="mx-auto">Congrats!</h2>
-              <p className="mx-auto">You've got the fastest time</p>
-              <form onSubmit={quickestTimePostReq}>
+            <div class="modal-content rounded border main ">
+              <h2 className="mx-auto modal_text_color">Congrats!</h2>
+              <p className="mx-auto modal_text_color">
+                You've got the fastest time
+              </p>
+
+              <p className="mx-auto modal_text_color">
+                Please enter your name below!
+              </p>
+              <form className="mx-auto" onSubmit={quickestTimePostReq}>
                 <input
                   onChange={(e) => setQTName(e.target.value)}
                   placeholder="Write your name"
-                  className="my-3  mx-auto"></input>
-                <button type="submit" className="mx-auto">
-                  Confirm
-                </button>
+                  className="my-3 form-control"></input>
+                <div className="d-flex justify-content-center">
+                  <button type="submit" className=" btn btn-outline-primary">
+                    Confirm
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -472,13 +481,14 @@ export default function Home() {
           <Floater></Floater>
         </div>
       )}
+
       {!gameOver &&
         !userLost &&
         play &&
         attempts.map((attempt, attemptIndex) => {
           return (
             <div
-              className="  d-flex justify-content-center mt-2 "
+              className="d-flex justify-content-center mt-2  "
               key={attemptIndex}>
               <form className="" onKeyUp={handleKeyUp}>
                 {play &&

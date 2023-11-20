@@ -1,37 +1,40 @@
-import React from 'react'
-import "../globals.css"
+import React from "react";
+import "../globals.css";
 
+import Link from "next/link";
 
-import Image from 'next/image'
+import Image from "next/image";
 
 const Footer = () => {
   return (
+    <>
+      <nav className="navbar fixed-bottom d-flex justify-content-center mx-auto gap-3 p-3 my-3">
+        <Link
+          target="_blank"
+          className="linkedin btn text-white px-4 py-2 "
+          href="https://www.linkedin.com/in/harun-abdi-25aa73164/"
+          role="button">
+          <Image
+            src="/assets/linkedin.svg"
+            width={15}
+            height={15}
+            alt="linkedin"></Image>
+        </Link>
 
-<>
-<nav className="navbar fixed-bottom d-flex justify-content-center mx-auto gap-3 p-3 my-3">
+        <Link
+          href="https://github.com/Harun8/numb3r"
+          target="_blank"
+          className="github btn text-white  px-4 py-2 "
+          role="button">
+          <Image
+            src="/assets/github.svg"
+            width={15}
+            height={15}
+            alt="github"></Image>
+        </Link>
+      </nav>
+    </>
+  );
+};
 
-
-    <a className='linkedin btn text-white px-4 py-2 ' role='button'>
-        <Image
-        src="/assets/linkedin.svg"
-        width={15}
-        height={15}
-        alt='linkedin'
-        ></Image>
-    </a>
-
-    <a className='github btn text-white  px-4 py-2 ' role='button'>
-        <Image
-        src="/assets/github.svg"
-        width={15}
-        height={15}
-        alt='github'
-        ></Image>
-    </a>
-</nav>
-
- </>
-    )
-}
-
-export default Footer
+export default Footer;

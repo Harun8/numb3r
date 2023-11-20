@@ -6,10 +6,6 @@ export const GET = async (req, res) => {
   try {
     await connectDB();
     const response = await answer.find({}).sort({ timer: 1 }); // -1 = desc, 1 = asec
-    // !answer.aggregate([
-    //   { $addFields: { numericTimer: { $toInt: "$timer" } } }, // converting string to numeric value then sorting it. Next time change schema to be type number/int
-    //   { $sort: { numericTimer: 1 } },
-    // ]);
 
     return new Response(JSON.stringify(response), { status: 200 });
   } catch (error) {
