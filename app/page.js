@@ -119,7 +119,7 @@ export default function Home() {
             correctNumber: Array(gameMode).fill(false),
           },
         ]);
-      }, 3000);
+      }, 5000);
 
       // console.log("menu?", menu);
       // console.log("play?", play);
@@ -409,9 +409,6 @@ export default function Home() {
 
   return (
     <div className="">
-      <div className="d-flex justify-content-center">
-        <h1>Wordle but just numbers..</h1>
-      </div>
       {openLeaderboardModal && (
         <>
           <div id="myModal" class="modal-backdrop ">
@@ -442,6 +439,9 @@ export default function Home() {
 
       {!play && menu && (
         <>
+          <div className="d-flex justify-content-center">
+            <h1>Wordle but just numbers..</h1>
+          </div>
           <div className="d-flex justify-content-center mt-5 ">
             <button
               id="start game"
@@ -484,7 +484,7 @@ export default function Home() {
 
       {(gameOver || userLost) && showFloater && (
         <div className=" d-flex justify-content-center">
-          <Floater></Floater>
+          <Floater userLost={userLost}></Floater>
         </div>
       )}
 

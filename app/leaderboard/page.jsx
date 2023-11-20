@@ -1,84 +1,54 @@
-"use client"
+"use client";
 
-import React, {useState,useEffect} from 'react'
-import "../styles/leaderboard.css"
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-        
+import React, { useState, useEffect } from "react";
+import "../styles/leaderboard.css";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+
 const Leaderboard = () => {
-  const [products, setProducts] = useState([
-    {
-      name: "Harun",
-      time: "2",
-      tries: "4"
-  },
-  {
-    name: "Michael",
-    time: "50",
-    tries: "5"
-},
-{
-  name: "Michael",
-  time: "42",
-  tries: "3"
-},
-{
-  name: "Michael",
-  time: "42",
-  tries: "3"
-},
-{
-  name: "Michael",
-  time: "42",
-  tries: "3"
-}
-  ]);
+  const [list, setList] = useState([]);
 
-  const [list, setList] = useState([])
-
-  useEffect(()=> {
-
-    const getLeaderboard = async() => {
-
+  useEffect(() => {
+    const getLeaderboard = async () => {
       try {
-        const response = await fetch("/api/leaderboard")
+        const response = await fetch("/api/leaderboard");
 
         if (!response.ok) {
-          throw new Error("Network response was not ok")
+          throw new Error("Network response was not ok");
         }
 
-        const data = await response.json()
-        
-        console.log("data", data)
-        setList(data)
+        const data = await response.json();
 
+        console.log("data", data);
+        setList(data);
       } catch (error) {
         console.log("error", error);
       }
+    };
 
-    }
+    getLeaderboard();
+  }, []);
 
-    getLeaderboard()
-  },[])
-  
   return (
-    <div className='d-flex justify-content-center '>
- <div className=" card   p-3 shadow " style={{ backgroundColor: 'var(--blue-50)'}} >
+    <div className="d-flex justify-content-center ">
+      <div
+        className=" card   p-3 shadow "
+        style={{ backgroundColor: "#2E4053" }}>
+        <DataTable
+          value={list}
+          stripedRows
+          showGridlines
+          tableStyle={{ minHeight: "25rem", minWidth: "25rem" }}>
+          <Column field="name" header="Name"></Column>
+          <Column field="timer" header="Time">
+            {" "}
+          </Column>
 
-
-
-       <DataTable   value={list} stripedRows showGridlines   tableStyle={{ minHeight: '25rem',minWidth: "25rem"  } }>
-                <Column field="name" header="Name"></Column>
-                <Column field="timer" header="Time"> </Column>
-                
-                <Column field="Round.length" header="Tries"></Column>
-            </DataTable>
-
-     
-        </div>
-
+          <Column field="Round.length" header="Tries"></Column>
+        </DataTable>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Leaderboard
+export default Leaderboard;
