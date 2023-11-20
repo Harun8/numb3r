@@ -8,6 +8,7 @@ import Image from "next/image";
 import "./globals.css";
 import Input from "./components/Input";
 import Floater from "./components/Floater";
+import Link from "next/link";
 
 export default function Home() {
   // horizontal
@@ -408,8 +409,9 @@ export default function Home() {
 
   return (
     <div className="">
-      {/* <button onClick={start}>Start</button> */}
-
+      <div className="d-flex justify-content-center">
+        <h1>Wordle but just numbers..</h1>
+      </div>
       {openLeaderboardModal && (
         <>
           <div id="myModal" class="modal-backdrop ">
@@ -460,12 +462,16 @@ export default function Home() {
             </button>
           </div>
           <div className="d-flex justify-content-center mt-3">
-            <button className="button">
+            <Link
+              href="/HowToPlay"
+              className="button"
+              type="button"
+              style={{ textDecoration: "none" }}>
               How to play
-              <div className="hoverEffect">
-                <div></div>
-              </div>
-            </button>
+            </Link>
+            <div className="hoverEffect">
+              <div></div>
+            </div>
           </div>
         </>
       )}
