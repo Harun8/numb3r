@@ -4,7 +4,7 @@ import { connectDB } from "@/utils/db";
 
 export const dynamic = "force-dynamic"; // vercel Bullshit static rendeirng
 // https://stackoverflow.com/questions/76356803/data-not-updating-when-deployed-nextjs13-app-on-vercel-despite-using-cache-no
-
+// simulate change
 export const GET = async (req, res) => {
   try {
     await connectDB();
