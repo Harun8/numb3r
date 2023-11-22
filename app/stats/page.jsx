@@ -13,7 +13,7 @@ const Stats = () => {
   useEffect(() => {
     const getGameStats = async () => {
       try {
-        const response = await fetch("/api/stats");
+        const response = await fetch("/api/stats", { method: "GET" });
 
         if (!response.ok) {
           console.log("Get request failed ui");
