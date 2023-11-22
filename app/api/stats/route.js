@@ -54,9 +54,6 @@ export const GET = async (req, res) => {
       },
     ];
 
-    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.setHeader("Pragma", "no-cache");
-    res.setHeader("Expires", "0");
     return new Response(JSON.stringify(response), { status: 200 });
   } catch (error) {
     console.log(error);
