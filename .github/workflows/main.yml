@@ -1,0 +1,23 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set NODE_ENV for Production
+      if: github.ref == 'refs/heads/main'
+      run: echo "NODE_ENV=production" >> $GITHUB_ENV
+
+    - name: Set NODE_ENV for Development
+      if: github.ref != 'refs/heads/main'
+      run: echo "NODE_ENV=development" >> $GITHUB_ENV
+
+    # Add steps for the rest of your deployment process
