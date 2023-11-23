@@ -12,12 +12,32 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set NODE_ENV for Production
+    - name: Set up Node Environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18' # or the version you're using
+
+    - name: Set NODE_ENV and MongoDB URI for Production
       if: github.ref == 'refs/heads/main'
-      run: echo "NODE_ENV=production" >> $GITHUB_ENV
+      run: |
+        echo "NODE_ENV=production" >> $GITHUB_ENV
+        echo "MONGO_URI=${{ secrets.MONGO_URI_PROD }}" >> $GITHUB_ENV
 
-    - name: Set NODE_ENV for Development
+    - name: Set NODE_ENV and MongoDB URI for Development
       if: github.ref != 'refs/heads/main'
-      run: echo "NODE_ENV=development" >> $GITHUB_ENV
+      run: |
+        echo "NODE_ENV=development" >> $GITHUB_ENV
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
 
-    # Add steps for the rest of your deployment process
+    # Install dependencies
+    - name: Install Dependencies
+      run: npm install
+
+    # Add other steps to build and deploy your application
+    # For example, building your application
+    - name: Build
+      run: npm run build
+
+    # If you have a deployment script or command, include it here
+    # - name: Deploy
+    #   run: <your deployment command>
