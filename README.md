@@ -14,9 +14,12 @@ Visit the link to start playing the Number Guessing Game right away! You have fi
 
 
 ## Features
-Number Guessing Mechanics: Similar to Wordle, but with numbers. You get five chances to guess the correct number.
-Leaderboard: A dedicated page to display players with the quickest guessing times.
-Statistics Page: A comprehensive view of various gameplay statistics, collected and presented from the database.
+- **Number Guessing Mechanics:** Similar to Wordle, but with numbers. You get five chances to guess the correct number.
+
+- **Leaderboard:** A dedicated page to display players with the quickest guessing times.
+
+- **Statistics Page:** A comprehensive view of various gameplay statistics, collected and presented from the database.
+
 
 ## Contact
 Your Name - harunabdi8@gmail.com
