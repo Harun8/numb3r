@@ -6,7 +6,7 @@ This is a [Next.js](https://nextjs.org/) project inspired by Wordle, but with a 
 
 The application is hosted and can be accessed at the following URL: [https://numb3r.vercel.app/](https://numb3r.vercel.app/)
 <p float="left">
-  <img src="https://github.com/Harun8/numb3r/assets/66841357/75ac3bf4-cfff-4b05-a470-649f0873029d" width="400" />
+  <img src="https://github.com/Harun8/numb3r/assets/66841357/c1fa7fa5-8634-4e7c-b5cc-ce6522c6c8cb" width="400" />
   <img src="https://github.com/Harun8/numb3r/assets/66841357/22ebba9f-6a74-4f73-afd7-50506e9f172b" width="400" /> 
 </p>
 
