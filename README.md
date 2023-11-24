@@ -22,5 +22,5 @@ Visit the link to start playing the Number Guessing Game right away! You have fi
 
 
 ## Contact
-Your Name - harunabdi8@gmail.com
+harunabdi8@gmail.com
 
