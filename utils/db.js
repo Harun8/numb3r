@@ -11,7 +11,7 @@ export const connectDB = async () => {
     process.env.NODE_ENV === "production" ? "ProdNumb3r" : "Numb3r";
 
   try {
-    await mongoose.connect(process.env.MONGO_URI_PROD, {
+    await mongoose.connect(mongoURI, {
       dbName: dbname,
       useNewUrlParser: true,
       useUnifiedTopology: true,
