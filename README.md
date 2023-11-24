@@ -6,8 +6,8 @@ This is a [Next.js](https://nextjs.org/) project inspired by Wordle, but with a 
 
 The application is hosted and can be accessed at the following URL: [https://numb3r.vercel.app/](https://numb3r.vercel.app/)
 <p float="left">
-  <img src="https://github.com/Harun8/numb3r/assets/66841357/c1fa7fa5-8634-4e7c-b5cc-ce6522c6c8cb" width="600" />
-  <img src="https://github.com/Harun8/numb3r/assets/66841357/22ebba9f-6a74-4f73-afd7-50506e9f172b" width="600" /> 
+  <img src="https://github.com/Harun8/numb3r/assets/66841357/f086269b-aaa3-41b5-8a27-ecc2e93d8eda" width="600" />
+  <img src="https://github.com/Harun8/numb3r/assets/66841357/bfc028ee-70c7-4fa9-8874-4b95b71899e9" width="600" /> 
 </p>
 
 Visit the link to start playing the Number Guessing Game right away! You have five attempts to guess the correct number.
