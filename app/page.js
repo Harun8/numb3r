@@ -20,7 +20,7 @@ export default function Home() {
   const [gameIsLost, setGameIsLost] = useState(false);
 
   const [openLeaderboardModal, setOpenLeaderboardModal] = useState(false);
-  const [quickestTime, setQuicketsTime] = useState(0);
+  const [quickestTime, setQuicketsTime] = useState(10000);
 
   const [userLost, setUserLost] = useState(false);
 
@@ -79,8 +79,6 @@ export default function Home() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        console.log("Data received:", data);
-        console.log("quicketsTime", data[0].timer);
 
         if (data && data.length > 0) {
           setQuicketsTime(data[0].timer); // Use 'data' here
@@ -189,9 +187,11 @@ export default function Home() {
 
   const postReq = async (userwon) => {
     console.log("totalseconds", totalSeconds);
+    console.log("quickets time", quickestTime);
     console.log("gameIsLost", userwon);
 
     if (totalSeconds < quickestTime) {
+      quickestTimePostReq;
       return;
     }
 
@@ -316,11 +316,9 @@ export default function Home() {
         !currentAttempt.correctPlace.every(Boolean)
       ) {
         setGameIsLost(true);
-        console.log("game over, u didnt solve it in time");
         pause();
         gameLost();
       } else if (currentAttempt.inputValues.includes("")) {
-        console.log("U STILL GOT SOME EMPTY BOXESS LEFT");
         return prevAttempts;
       } else if (
         !currentAttempt.correctPlace.every(Boolean) &&
@@ -373,10 +371,7 @@ export default function Home() {
 
   // enter key as input
   const handleKeyUp = (e) => {
-    console.log("event", e);
-
     if (e.key === "Enter") {
-      console.log("enter pressed");
       checkAnswer();
     } else if (e.key === "Backspace" && e.target.value === "") {
       deleteInput();
@@ -384,7 +379,6 @@ export default function Home() {
   };
 
   const quickestTimePostReq = async () => {
-    console.log("YESSIRRR", qTName);
     setOpenLeaderboardModal((prev) => !prev);
 
     try {
