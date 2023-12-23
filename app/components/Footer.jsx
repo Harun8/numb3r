@@ -8,7 +8,7 @@ import Image from "next/image";
 const Footer = () => {
   return (
     <>
-      <nav className="navbar fixed-bottom d-flex justify-content-center mx-auto gap-3 p-3 my-3">
+      <nav className="navbar fixed-bottom d-flex justify-content-center mx-auto gap-3 p-3 my-5">
         <Link
           target="_blank"
           className="linkedin btn text-white px-4 py-2 "
@@ -33,6 +33,9 @@ const Footer = () => {
             alt="github"></Image>
         </Link>
       </nav>
+      <div className=" fixed-bottom d-flex justify-content-center mt-2 text-white">
+        <p>Version: {process.env.NEXT_PUBLIC_APP_VERSION}</p>
+      </div>
     </>
   );
 };
