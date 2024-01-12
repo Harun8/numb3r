@@ -16,11 +16,9 @@ const Stats = () => {
         const response = await fetch("/api/stats", { method: "GET" });
 
         if (!response.ok) {
-          console.log("Get request failed ui");
         }
 
         const data = await response.json();
-        console.log("data", data);
         setGameCompletionRatio(data);
       } catch (error) {
         console.log(error);
@@ -30,8 +28,6 @@ const Stats = () => {
   }, []);
 
   useEffect(() => {
-    console.log("gameCompletionRatio", gameCompletionRatio);
-    // console.log("roundwin", gameCompletionRatio[3].roundWin[0].round1Win);
     setData({
       labels: ["Won", "Lost"],
       datasets: [
