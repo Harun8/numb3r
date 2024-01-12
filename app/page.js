@@ -24,7 +24,7 @@ export default function Home() {
 
   const [userLost, setUserLost] = useState(false);
 
-  const [qTName, setQTName] = useState();
+  const [qTName, setQTName] = useState("");
 
   const [secs, setSecs] = useState();
   const [focusIndex, setFocusIndex] = useState(0);
