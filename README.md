@@ -22,7 +22,7 @@ Visit the link to start playing the Number Guessing Game right away! You have fi
 
 
 ## Versioning
-[https://cpl.thalesgroup.com/software-monetization/software-versioning-basics]
+How i version the code: https://cpl.thalesgroup.com/software-monetization/software-versioning-basics
 
 ## Contact
 harunabdi8@gmail.com
