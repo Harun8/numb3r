@@ -4,7 +4,7 @@ import "../globals.css";
 import Link from "next/link";
 
 import Image from "next/image";
-import { version } from "./package.json";
+import { version } from "../../package.json";
 
 const Footer = () => {
   return (
