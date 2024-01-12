@@ -63,14 +63,6 @@ export default function Home() {
     reset,
   } = useStopwatch({ autoStart: false });
 
-  // useEffect(() => {
-  //   console.log("seconds", totalSeconds);
-  // }, [seconds]);
-
-  // useEffect(() => {
-  //   generateGameNumber();
-  // }, []);
-
   useEffect(() => {
     const getGameStats = async () => {
       try {
@@ -91,9 +83,7 @@ export default function Home() {
     getGameStats();
   }, []);
 
-  useEffect(() => {
-    console.log("attempts:", attempts);
-  }, [attempts]);
+  useEffect(() => {}, [attempts]);
 
   useEffect(() => {
     if (play) {
@@ -108,7 +98,6 @@ export default function Home() {
         setMenu((prev) => !prev); // generate the menu after the floater is done celebraiting the win for the user
         setGameOver((prev) => !prev);
         setFocusIndex(0);
-        //reset();
 
         setAttempts([
           {
@@ -119,8 +108,6 @@ export default function Home() {
         ]);
       }, 5000);
 
-      // console.log("menu?", menu);
-      // console.log("play?", play);
       return () => {
         clearTimeout(timeoutId);
       }; // Cleanup the timeout
@@ -129,9 +116,6 @@ export default function Home() {
 
   useEffect(() => {
     if (userLost) {
-      // console.log("attempts", attempts);
-      // console.log("showFloater?", showFloater);
-
       const timeoutId = setTimeout(() => {
         setShowFloater(false);
         setMenu((prev) => !prev); // generate the menu after the floater is done celebraiting the win for the user
@@ -146,8 +130,6 @@ export default function Home() {
         ]);
       }, 3000);
 
-      // console.log("menu?", menu);
-      // console.log("play?", play);
       return () => {
         clearTimeout(timeoutId);
       }; // Cleanup the timeout
@@ -161,24 +143,13 @@ export default function Home() {
 
   const gameWon = () => {
     let userwon = true;
-    console.log("GAME WON CALLED");
-    console.log("timer stopped");
-    console.log("totalseconds", totalSeconds);
-    console.log("quicketsTime", quickestTime);
-    // TODO: IF user is quicker than the quickets time then open up the modal:
 
     if (totalSeconds < quickestTime) {
-      console.log("QUICKETS TIMER MFFFFF");
       setOpenLeaderboardModal(true);
     }
 
-    setAttempts((prevAttempts) => [
-      ...prevAttempts,
-      // { timer: { hours, minutes, seconds } },
-      // { gameAnswer: gameAnswer }, // Append the timer object
-    ]);
-    // gameDone()
-    // setGameIsLost(false);
+    setAttempts((prevAttempts) => [...prevAttempts]);
+
     postReq(userwon);
     setGameOver(true);
     setPlay(false);
@@ -186,17 +157,12 @@ export default function Home() {
   };
 
   const postReq = async (userwon) => {
-    console.log("totalseconds", totalSeconds);
-    console.log("quickets time", quickestTime);
-    console.log("gameIsLost", userwon);
-
     if (totalSeconds < quickestTime) {
       quickestTimePostReq;
       return;
     }
 
     try {
-      console.log("post", attempts);
       const response = await fetch("/api", {
         method: "post",
 
@@ -209,7 +175,6 @@ export default function Home() {
       });
 
       if (response.ok) {
-        console.log("Requested success");
         reset();
       }
     } catch (error) {
@@ -219,13 +184,7 @@ export default function Home() {
 
   const gameLost = () => {
     let userwon = false;
-    console.log("GAME LOST CALLED");
-    setAttempts((prevAttempts) => [
-      ...prevAttempts,
-      // { timer: { hours, minutes, seconds } },
-      // { gameAnswer: gameAnswer }, // Append the timer object
-    ]);
-    // setGameIsLost(true);
+    setAttempts((prevAttempts) => [...prevAttempts]);
     postReq(userwon);
 
     setUserLost(true);
@@ -235,17 +194,12 @@ export default function Home() {
 
   const generateGameNumber = () => {
     let gameAnswer = [];
-    console.log("length", gameAnswer.length);
     let numberGenerator = Math.floor(Math.random() * 9 + 1);
 
     for (let i = 0; i < gameMode; i++) {
       let numberGenerator = Math.floor(Math.random() * 9 + 1);
 
       while (gameAnswer.includes(numberGenerator)) {
-        console.log(
-          "Dette tal findes allerede så jeg generere et nyt",
-          numberGenerator
-        );
         numberGenerator = Math.floor(Math.random() * 9 + 1);
       }
 
@@ -253,34 +207,23 @@ export default function Home() {
     }
 
     setGameAnswer(gameAnswer);
-    console.log("game", gameAnswer);
     return gameAnswer;
   };
 
   const handleInputChange = (attemptIndex, index, event) => {
-    console.log("handleInput called");
-    console.log("attempindex", attemptIndex);
-    // console.log("index", index);
-    // console.log("event", event);
-
     const newValue = event.target.value;
     const parsedValue = parseInt(newValue, 10); // Parse once and use the parsed value
 
-    console.log("new value", newValue);
-
     if (!Number.isInteger(parseInt(newValue))) {
       console.log("Not a valid integer number");
-      // event.target.value = "";
-      // deleteInput();
+
       return; // Early return to prevent further state updates
     }
 
     if (attempts[attemptIndex].inputValues.includes(parsedValue)) {
-      console.log("duplicate numbers");
       return;
     }
 
-    console.log("made it ehre");
     if (attemptIndex === 0 && index === 0 && attempts.length === 1) {
       startTimer();
     }
@@ -300,8 +243,6 @@ export default function Home() {
     }
   };
   const checkAnswer = (event) => {
-    // console.log("event", event);
-    console.log("game answer", gameAnswer);
     setAttempts((prevAttempts) => {
       const currentAttempt = { ...prevAttempts[prevAttempts.length - 1] };
       currentAttempt.correctPlace = currentAttempt.inputValues.map(
@@ -444,10 +385,6 @@ export default function Home() {
                 setPlay((prev) => !prev);
                 setMenu((prev) => !prev);
                 generateGameNumber();
-
-                // console.log("gameover??", gameOver);
-                // console.log("play???", play);
-                // console.log("autofocuss??", focusIndex, inputRefs.current);
               }}>
               Start Game
               <div className="hoverEffect">
@@ -469,12 +406,6 @@ export default function Home() {
           </div>
         </>
       )}
-      {/* 
-      <button
-        className="btn btn-outline-success btn-sm mt-5"
-        onClick={checkAnswer}>
-        Click me
-      </button> */}
 
       {(gameOver || userLost) && showFloater && (
         <div className=" d-flex justify-content-center">
@@ -493,7 +424,6 @@ export default function Home() {
               <form className="" onKeyUp={handleKeyUp}>
                 {play &&
                   attempt.inputValues.map((value, index) => {
-                    // console.log("indexxx", index, inputRefs.current[index]);
                     return (
                       <Input
                         id={index}
