@@ -4,6 +4,7 @@ import "../globals.css";
 import Link from "next/link";
 
 import Image from "next/image";
+import { version } from "./package.json";
 
 const Footer = () => {
   return (
@@ -34,7 +35,7 @@ const Footer = () => {
         </Link>
       </nav>
       <div className=" fixed-bottom d-flex justify-content-center mt-2 text-white">
-        <p>Version: {process.env.NEXT_PUBLIC_APP_VERSION}</p>
+        <p>Version: {version}</p>
       </div>
     </>
   );
