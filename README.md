@@ -21,6 +21,9 @@ Visit the link to start playing the Number Guessing Game right away! You have fi
 - **Statistics Page:** A comprehensive view of various gameplay statistics, collected and presented from the database.
 
 
+## Versioning
+[https://cpl.thalesgroup.com/software-monetization/software-versioning-basics]
+
 ## Contact
 harunabdi8@gmail.com
 
