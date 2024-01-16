@@ -24,6 +24,10 @@ Visit the link to start playing the Number Guessing Game right away! You have fi
 ## Versioning
 How i version the code: https://cpl.thalesgroup.com/software-monetization/software-versioning-basics
 
+## Next steps
+1. Rewrite the code to TypeScript (when I learn it)
+2. Refactor the code (eg. make use of good practises and better naming of variables)
+
 ## Contact
 harunabdi8@gmail.com
 
