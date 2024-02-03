@@ -3,6 +3,8 @@ import answer from "@/models/gameAnswer";
 import { connectDB } from "@/utils/db";
 export const dynamic = "force-dynamic"; // vercel Bullshit static rendeirng
 
+export const dynamic = 'force-dynamic';
+
 export const GET = async (req, res) => {
   try {
     await connectDB();
