@@ -27,7 +27,9 @@ How i version the code: https://cpl.thalesgroup.com/software-monetization/softwa
 ## Next steps
 1. Rewrite the code to TypeScript (when I learn it)
 2. Refactor the code (eg. make use of good practises and better naming of variables)
-
+3. Make use of server components where it is possible
+4. Make use of automated test
+5. Enhance the pipeline
 ## Contact
 harunabdi8@gmail.com
 
